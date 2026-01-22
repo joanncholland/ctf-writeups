@@ -1,20 +1,32 @@
-# Machine Name – Hack The Box
+# Linux Fundamentals
 
 ## Overview
 
 Difficulty: Easy  
 Skills Tested: Enumeration, SMB exploitation, privilege escalation
 
-## Reconnaissance
+## Commands
 
-- Initial Nmap scan revealed ports 21, 22, 445
-- SMB allowed anonymous login
+| Command    |                        Description                         |
+| ---------- | :--------------------------------------------------------: |
+| echo       |              Output any text that we provide               |
+| whoami     |      Find out what user we're currently logged in as!      |
+| ls         |        List files and folders in current directory         |
+| cd         |                      Change directory                      |
+| cat        |            View contents of file (concatenate)             |
+| pwd        |                  Print working directory                   |
+| find -name |                    Find file with name                     |
+| wc         | Word count - can use flags -l (line), -w (word), -c (byte) |
+| grep       |              Search file for specific content              |
 
-## Exploitation
+## Linux Operators
 
-- Enumerated SMB shares using smbclient
-- Discovered vulnerable service version
-- Exploited using Metasploit/manual exploit
+| Operator | Description                                                                                                                                      |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| &        | Run commands in the background of your terminal                                                                                                  |
+| &&       | Combine multiple commands together in one line                                                                                                   |
+| >        | This operator is a redirector - meaning that we can take the output from a command (such as using cat to output a file) and direct it elsewhere. |
+| >>       | This operator does the same function of the > operator but appends the output rather than replacing (meaning nothing is overwritten).            |
 
 ## Privilege Escalation
 
