@@ -1,11 +1,5 @@
 # Key Networking Concepts
 
-TCP vs UDP
-
-Ports & services
-
-Why scanning works
-
 ## Networking Structure
 
 ### Network Types
@@ -144,7 +138,7 @@ TCP/IP (Transmission Control Protocol/Internet Protocol) is a generic term for m
 
 The most important tasks of TCP/IP are:
 
-- **Logical Addressing (IP protocol):** IP takes over logical addressing of networks and nodes. Data packets only reach the network where they are supposed to be, and the methods to do so are network classes, subnetting, and CIDR.
+- **Logical Addressing (IP protocol):** IP takes over logical addressing of networks and nodes. Data packets only reach the network where they are supposed to be, and the methods to do so are network classes, subnetting, and CIDR (Classless Inter-Domain Routing).
 - **Routing (IP protocol):** For each data packet, the next node is determined in each node on the way from the sender to the receiver. This way, a data packet is routed to its receiver, even if its location is unknown to the sender.
 - **Error & Control Flow (TCP protocol):** Sender and receiver are frequently in touch with each other via a virtual connection, therefore control messages are sent continuously to check if the connection is still established.
 - **Application Support (TCP protocol):** TCP and UDP ports form a software abstraction to distinguish specific applciations and their communication links.
@@ -155,3 +149,129 @@ The most important tasks of TCP/IP are:
 In a layered system, devices in a layer exchange data in a different format called a protocol data unit (PDU). Durig the transmission, each layer adds a header to the PDU from the upper layer, which controls and identifies the packet. This process is called encapsulation, and the header and the data together form the PDU for the next layer.
 
 ![Packet transfer at each layer](./Screenshots/packet-transfer.png)
+
+## Addressing
+
+The network layer (layer 3) of OSI controls the exchange of data packets, as these cannot be directlyr outed to the receiver and therefore have to be provided with routing nodes. When sending the packets, addresses are evaluated, and the data is routed through the network from node to node. It is responsible for the following functions:
+
+- Logical addressing
+- Routing
+
+The most used protocols on this layer are:
+
+- IPv4 / IPv6
+- IPsec
+- ICMP
+- IGMP
+- RIP
+- OSPF
+
+It ensures the routing of packets from source to destination within or outside a subnet.
+
+### IPv4 Addresses
+
+Each host in the network located can be identified by the Media Access Control address (MAC address). Addressing on the Internet is done via the IPv4 / IPv6 address, which is made up of the network address and the host address. We can imagine the representation of MAC and IPv4 / IPv6 addresses as follows:
+
+- **IPv4 / IPv6** describes the unique postal address and district of the receiver's building.
+- **MAC** describes the exact floor and apartment number of the receiver.
+
+It is possible for a single IP address to address multiple receivers (broadcasting) or for a device to respond to multiple IP addresses. However, it must be ensured that each IP address is assigned only once within the network.
+
+### IPv4 Structure
+
+IPv4 addresses consist of a 32-bit binary number combined into 4 bytes consisting of 8-bit groups (octets) ranging from 0-255. These are converted into more easily readable decimal numbers, separated by dots and represented as dotted-decimal notation.
+
+An IPv4 address can look like this:
+
+| Notation | Presentation                            |
+| -------- | --------------------------------------- |
+| Binary   | 0111 1111.0000 0000.0000 0000.0000 0001 |
+| Decimal  | 127.0.0.1                               |
+
+The IPv4 format allows 4,294, 967, 296 unique addresses. The IP address is divided into host part and a network part. The router assigns the host part at home or by an administrator, and the respective network administrator assigns the network part.
+
+For the first octet 127, you can work out the decimal to binary like so:
+
+| Values | Binary |
+| ------ | ------ |
+| 128    | 0      |
+| 64     | 1      |
+| 32     | 1      |
+| 16     | 1      |
+| 8      | 1      |
+| 4      | 1      |
+| 2      | 1      |
+| 1      | 1      |
+
+So the binary for 127 is 0111111. This works the other way too - you can add the values to make 127 i.e. 64+32+16+8+4+2+1 = 127.
+
+### Subnet Mask
+
+In the past, the IP network blocks were divided into classes A - E:
+
+| Class | Network Address | First Address | Last Address    | Subnetmask    | CIDR      | Subnets   | IPs           |
+| ----- | --------------- | ------------- | --------------- | ------------- | --------- | --------- | ------------- |
+| A     | 1.0.0.0         | 1.0.0.1       | 127.255.255.255 | 255.0.0.0     | /8        | 127       | 16,77,214 + 2 |
+| B     | 128.0.0.0       | 128.0.0.1     | 191.255.255.255 | 255.255.0.0   | /16       | 16,384    | 65,534 + 2    |
+| C     | 192.0.0.0       | 192.0.0.1     | 223.255.255.255 | 255.255.255.0 | /24       | 2,097,152 | 254 + 2       |
+| D     | 224.0.0.0       | 224.0.0.1     | 239.255.255.255 | Multicast     | Multicast | Multicast | Multicast     |
+| E     | 240.0.0.0       | 240.0.0.1     | 255.255.255.255 | reserved      | reserved  | reserved  | reserved      |
+
+The division of an address range of IPv4 addresses into several smaller address ranges is called subnetting. A subnet is a logical segment of a network that uses IP addresses with the same network address.
+
+The bits in the host part can be changed to the first and last address. The first address is the _network address_ and the last address is the _broadcast address_ for the respective subnet.
+
+### CIDR
+
+Classless Inter-Domain Routing (CIDR) is a method of representation and replaces the fixed assignment between IPv4 address and network classes (A, B, C, D, E). The division is based on the subnet mask or the CIDR suffix, which allows the bitwise division of the IPv4 address space and thus into subnets of any size.
+
+The CIDR suffix indicates how many its from the beginning of the IPv4 address belong to the network. It is a notation that represents subnet mask by specifying the number of 1-bits in the subnet mask.
+
+For example, an IPv4 address of 192.168.10.39 and subnet mask 255.255.255.0 have a CIDR of 192.168.10.39/24
+
+### MAC Addresses
+
+Each host in a network has its own 48-bit (6 octets) MAC address, represented in hexadecimal format, and it is the physical address for our network interfaces. There are several different standards for the MAC address:
+
+- Ethernet (IEEE 802.3)
+- Bluetooth (IEEE 802.15)
+- WLAN (IEEE 802.11)
+
+This is because the MAC address addresses the physical connection (network card, bluetooth, or WLAN adapter) ofa host.
+
+Example of a MAC address:
+
+| Representation | 1st Octet | 2nd Octet | 3rd Octet | 4th Octet | 5th Octet | 6th Octet |
+| -------------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| Binary         | 11011110  | 10101101  | 10111110  | 1110111   | 00010011  | 00110111  |
+| Hex            | DE        | AD        | BE        | EF        | 13        | 37        |
+
+The first half is the Organization Unique Identifier (OUI) for the respective manufacturers. The last half is called the Individual Access Part or Network Interface Controller (NIC), which the manufacturer assigns.
+
+When an IP packet is delivered, it must be addressed on layer 2 to the destination host's physical address or to the router. Each packet has a sender and receiver address. Address Resolution Protocol (ARP) is used in IPv4 to determine the MAC addresses associated with the IP addresses.
+
+#### MAC Address Attack Vectors
+
+MAC addresses can be changed/manipulated or spoofed, so they should not be relied upon as the sole means of security or identification. Network administrators should implement additional security measures, such as network segmentation and strong authentication protocols to protect against potential attacks.
+
+There are several attack vectors that can be exploited using MAC addresses:
+
+- **MAC spoofing** involves altering the MAC address of a device to match that of another device, typically to gain unauthorised access.
+- **MAC flooding** involves sending many packets with different MAC addresses to a network switch, causing it to reach its MAC address table capacity and prevent it from functioning properly.
+- **MAC address filtering** - some networks to be configured only to allow access to devices with specific MAC addresses that could be exploited by attempting to gain access using a spoofed MAC address.
+
+#### Address Resolution Protcol
+
+ARP is a network protocol which is an important part of the network communication used to resolve a network layer (layer 3) IP address to a data link layer (layer 2) MAC address. It allows devices to send and receive data using MAC addresses rather than IP addresses.
+
+ARP spoofing, also known as ARP cache poisoning or ARP poison routing, is an attack that can be done using tools like Ettercap or Cain & Abel to send falsified ARP messages over a LAN. The goal is to associate our MAC address with the IP address of a legitimate device on the company's network, effectively allowing us to intercept traffic intended for the legitimate device.
+
+### IPv6 Addresses
+
+IPv6 is the successor of IPv4 and is 128 bit long. The prefix defines the host and network parts.
+
+## TCP vs UDP
+
+Transmission Control Protocol (TCP) is a connection-oriented protocol that establishes a virtual connection between two devices before transmitting data by using a three-way handshake. This connection is maintained until the data transfer is complete, and the devices can continue to send data back and forth as long as the connection is active. i.e. requesting a website, the browser sends an HTTP request to the server hosting the website using TCP.
+
+In contrast, the User Datagram Protocol (UDP) is a connectionless protocol, which means it does not establish a virtual connection before transmitting data. Instead, it sends the data packets to the destination without checking to see if they were received. i.e. used for streaming videos or music.
