@@ -275,3 +275,27 @@ IPv6 is the successor of IPv4 and is 128 bit long. The prefix defines the host a
 Transmission Control Protocol (TCP) is a connection-oriented protocol that establishes a virtual connection between two devices before transmitting data by using a three-way handshake. This connection is maintained until the data transfer is complete, and the devices can continue to send data back and forth as long as the connection is active. i.e. requesting a website, the browser sends an HTTP request to the server hosting the website using TCP.
 
 In contrast, the User Datagram Protocol (UDP) is a connectionless protocol, which means it does not establish a virtual connection before transmitting data. Instead, it sends the data packets to the destination without checking to see if they were received. i.e. used for streaming videos or music.
+
+## Wireless Networks
+
+Wireless networks use radio frequency (RF) technology to transmit data between devices. Each device has a wireless adapter that converts data into RF signals and sends them over the air.
+
+The strength of the RF signal and the distance it can travel are influenced by factors such as the transmitter's power, the presence of obstacles, and the density of RF noise in the environment. To ensure reliable communication, WiFi networks use techniques such as spread spectrum transmission and error correction to overcome these challenges.
+
+## Virtual Private Networks
+
+A Virtual Private Network (VPN) is a technology that allows a secure and encrypted connection between a private network and a remote device. VPN typically uses the ports TCP/1723 for point-to-point tunneling protocol (PPTP) VPN connections and UDP/500 for IKEv1 and IKEv2 connections. The VPN client and server uses these ports to establish and maintain the VPN connection. At the TCP/IP layer, a VPN connection typically uses the Encapsulating Security Payload (ESP) protocol to encrypt and authenticate the VPN traffic. This allows the VPN client and server to exchange data over the public internet securely.
+
+### IPsec
+
+Internet Protocol Security (IPsec) is a network security protocol that provides encryption and authentication for internet communications. It encrypts the data payload of each IP packet and adds an authentication header (AH) used to verify the integrity and authenticity of the packet. IPsec uses two protocols:
+
+1. **Authentication Header (AH):** Provides integrity and authenticity for IP packets, but not authentication.
+   2A cybersecurity learning portfolio featuring CTF write-ups, security fundamentals, and research into emerging areas such as AI and LLM security.
+2. **Encapsulating Security Payload (ESP):** Provides encryption and optional authentication for IP packets.
+
+IPsec can be used in two modes:
+| Mode | Description|
+|-|-|
+|Transport Mode | IPsec encrypts and authenticates the data payload of each IP packet but does not encrypt the IP header. Typically used to secure end-to-end communication between two hosts. |
+| Tunnel Mode | IPsec encrypts and authenticates the entire IP packet, including the IP header. Typically used to create a VPN tunnel between two networks. |
